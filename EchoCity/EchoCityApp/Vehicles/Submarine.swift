@@ -29,8 +29,10 @@ class Submarine: Vehicle {
 
         self.position += forward * speed * dt
 
-        // Contrôle de la profondeur (exemple simplifié via steering vertical)
-        // Dans une vraie implémentation, on aurait un axe Y dédié
+        // Contrôle de la profondeur
+        let targetY = -abs(depth) // Le sous-marin reste sous l'eau
+        let currentY = self.position.y
+        self.position.y += (targetY - currentY) * dt * 1.5
 
         // Rotation
         let rotationAngle = steering * rotationSpeed * dt

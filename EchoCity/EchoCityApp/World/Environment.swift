@@ -21,11 +21,12 @@ class Environment: Entity {
     private func setupAtmosphere() {
         // ImageBasedLight pour un rendu réaliste
         // Note: En production, le chargement doit être asynchrone via .loadAsync
-        // Pour ce template, nous définissons la structure de base.
 
         Task {
             if let texture = try? await TextureResource.load(named: "Skybox") {
-                let ibl = try? await ImageBasedLightReceiverComponent.self.entity.components.get(ImageBasedLightComponent.self) // Dummy reference for structure
+                let iblComponent = ImageBasedLightComponent(source: .single(texture))
+                self.components.set(iblComponent)
+                self.components.set(ImageBasedLightReceiverComponent(imageBasedLight: self))
                 print("EchoCity: Atmosphere loaded")
             }
         }

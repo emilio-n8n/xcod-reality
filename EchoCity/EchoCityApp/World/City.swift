@@ -28,6 +28,22 @@ class City: Entity {
         light.light.intensity = 1000
         light.position = [0, 10, 0]
         addChild(light)
+
+        // Spawn de quelques logs
+        spawnLogs()
+    }
+
+    private func spawnLogs() {
+        let logPositions: [(String, SIMD3<Float>)] = [
+            ("log_001", [5, 0.5, -5]),
+            ("log_002", [-8, 0.5, 3]),
+            ("log_003", [2, -2, 15]) // Inondé (pour sub)
+        ]
+
+        for (id, pos) in logPositions {
+            let logEntity = CollectibleLog(id: id, position: pos)
+            addChild(logEntity)
+        }
     }
 
     func transition(to zoneID: String) async {

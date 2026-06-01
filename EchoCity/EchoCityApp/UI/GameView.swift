@@ -20,6 +20,13 @@ struct GameView: View {
             }
             .gesture(SpatialTapGesture().targetedToAnyEntity().onEnded { event in
                 print("EchoCity: Tapped entity \(event.entity.name)")
+
+                // Interaction avec les logs
+                if let log = event.entity as? CollectibleLog {
+                    log.collect()
+                } else if let parentLog = event.entity.parent as? CollectibleLog {
+                    parentLog.collect()
+                }
             })
 
             // HUD & UI

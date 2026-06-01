@@ -71,6 +71,19 @@ class EchoCityGame: ObservableObject {
     }
 
     private func update(deltaTime: TimeInterval) {
-        activeVehicle?.update(deltaTime: deltaTime)
+        // Injection des inputs dans le véhicule actif
+        if let vehicle = activeVehicle {
+            vehicle.throttle = InputManager.shared.throttle
+            vehicle.steering = InputManager.shared.steering
+
+            // Logique spécifique drone/sub pour le lift
+            if let drone = vehicle as? Drone {
+                drone.targetAltitude += InputManager.shared.lift * Float(deltaTime) * 2.0
+            } else if let sub = vehicle as? Submarine {
+                sub.depth += InputManager.shared.lift * Float(deltaTime) * 2.0
+            }
+
+            vehicle.update(deltaTime: deltaTime)
+        }
     }
 }
